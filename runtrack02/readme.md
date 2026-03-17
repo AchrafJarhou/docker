@@ -1,3 +1,18 @@
+
+
+# Welcome to Docker - Projet 2
+
+## 1. Installation
+[Version](images/version.png)
+Commande utilisée : `docker --version`
+
+## 2. Lancement du projet
+Commande : `docker run -it --rm -p 8088:80 docker/welcome-to-docker`
+Description : Cette commande lance un serveur web accessible sur le port 8088. 
+L'option --rm permet de ne pas laisser de traces après l'arrêt.
+
+## 3. Nettoyage
+
 # Suppression Docker
 
 ## Suppression des conteneurs
@@ -43,3 +58,10 @@
   ```bash
   docker rmi -f <NOM_IMAGE>
   ```
+
+# Note importante
+```
+ On ne peut pas supprimer une image (rmi) tant que le conteneur qui l'utilise n'est pas supprimé (même s'il est arrêté).
+
+La correction : Il faut d'abord faire docker rm du conteneur, PUIS docker rmi de l'image. Ou utiliser le flag -f (mais c'est moins "propre").
+```
