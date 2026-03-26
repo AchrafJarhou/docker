@@ -1,0 +1,40 @@
+services:
+  symfony_db:
+    image: mysql:8.0
+    container_name: Symfony_db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: Symfony
+      MYSQL_USER: Symfony
+      MYSQL_PASSWORD: Symfony
+    ports:
+      - "3306:3306"
+
+  symfony_app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: Symfony_app
+    volumes:
+      - "./app:/var/www/html"
+    depends_on:
+      - symfony_db
+
+  symfony_web:
+    image: nginx:alpine
+    container_name: Symfony_web
+    ports:
+      - "8080:80"
+    volumes:
+      - "./nginx/default.conf:/etc/nginx/conf.d/default.conf"
+      - "./app:/var/www/html"
+    depends_on:
+      - symfony_app
+
+  symfony_pma:
+    image: phpmyadmin
+    container_name: Symfony_pma
+    environment:
+      PMA_HOST: Symfony_db
+    ports:
+      - "8081:80"
